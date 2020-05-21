@@ -10,6 +10,5 @@ server.use(express.json());
 
 //ROTAS
 server.use('/', home);
-require('./src/routes/admin/index')(server);
 
 server.listen(3100);
