@@ -1,0 +1,17 @@
+{
+  "name": "ngrok_simple",
+  "version": "1.0.0",
+  "description": "A simple module to use ngrok",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node",
+    "Ngrok",
+    "Npm"
+  ],
+  "author": "Samuel Alejandro",
+  "license": "ISC",
+  "types": "ngrok-simple.d.ts"
+}
