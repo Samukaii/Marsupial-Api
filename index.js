@@ -1,7 +1,5 @@
-const requireDir = require('require-dir');
 const express = require('express');
-requireDir('./src/app/models');
-const home = require('./src/routes/home');
+require('./src/app/models/user');
 
 const server = express();
 
@@ -9,6 +7,5 @@ const server = express();
 server.use(express.json());
 
 //ROTAS
-server.use('/', home);
-
+require('./src/routes/authentication')(server);
 server.listen(3100);
