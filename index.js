@@ -12,4 +12,4 @@ server.use(cors());
 //ROTAS
 require('./src/routes/authentication')(server);
 require('./src/routes/admin')(server);
-server.listen(3100);
+server.listen(process.env.PORT || 3100);
