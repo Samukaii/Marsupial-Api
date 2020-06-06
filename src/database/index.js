@@ -1,6 +1,6 @@
 //const databaseUrl = require('./databaseTunnelUrl.json').url;
-const mongoose = require('mongoose');
 require('dotenv/config');
+const mongoose = require('mongoose');
 
 //var stringConnection = `mongodb://${databaseUrl}/marsupialApi`;
 
