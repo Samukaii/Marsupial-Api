@@ -2,13 +2,13 @@
 require('dotenv/config');
 const mongoose = require('mongoose');
 
-//var stringConnection = `mongodb://${databaseUrl}/marsupialApi`;
+var stringConnection = process.env.MONGO_URL;
 
 connectDB();
 
 async function connectDB() {
   try {
-    await mongoose.connect(process.env.MONGO_URL, {
+    await mongoose.connect(stringConnection, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });

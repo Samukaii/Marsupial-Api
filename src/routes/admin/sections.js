@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../../app/middlewares/auth');
 const {index, show, store, update, destroy} = require('../../app/controllers/sectionController');
 
-router.use(auth);
+//router.use(auth);
 
 router.get('/', index);
 router.get('/:id', show);

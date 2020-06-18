@@ -17,10 +17,10 @@ module.exports = {
         if (!title || !section)
             return res
                 .status(400)
-                .send({Error: 'Nem todos os campos obrigatórios foram fornecidos'});
+                .send({error: 'Nem todos os campos obrigatórios foram fornecidos'});
 
         const [lesson, error] = await to(Lesson.create(req.body));
-        if (error) res.status(400).send({Error: 'Erro ao adicionar aula ' + error});
+        if (error) res.status(400).send({error: 'Erro ao adicionar aula ' + error});
         return res.status(201).send(lesson);
     },
     async update(req, res) {

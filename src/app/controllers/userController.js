@@ -16,7 +16,7 @@ module.exports = {
 
         if (email)
             if (await User.findOne({email}))
-                return res.status(400).send({Error: 'E-mail já cadastrado na base de dados'});
+                return res.status(400).send({error: 'E-mail já cadastrado na base de dados'});
         const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
 
         return res.json(user);

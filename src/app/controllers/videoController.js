@@ -33,10 +33,10 @@ module.exports = {
         if (!title || !link || !lesson)
             return res
                 .status(400)
-                .send({Error: 'Nem todos os campos obrigatórios foram fornecidos'});
+                .send({error: 'Nem todos os campos obrigatórios foram fornecidos'});
 
         const [video, error] = await to(Video.create(req.body));
-        if (error) res.status(400).send({Error: 'Erro ao adicionar vídeo ' + error});
+        if (error) res.status(400).send({error: 'Erro ao adicionar vídeo ' + error});
         return res.status(201).send(video);
     },
     async update(req, res) {

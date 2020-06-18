@@ -6,10 +6,10 @@ const secret = process.env.APP_SECRET;
 const WithAuth = (req, res, next) => {
   const token = req.headers['x-access-token'];
   if (!token) {
-    res.status(400).send({Error: 'Token not provided'});
+    res.status(400).send({error: 'Token not provided'});
   } else {
     jwt.verify(token, secret, (err, decoded) => {
-      if (err) res.status(401).send({Error: 'Token invalid'});
+      if (err) res.status(401).send({error: 'Token invalid'});
       else {
         req.email = decoded.email;
         User.findOne({email: decoded.email})
