@@ -1,14 +1,19 @@
-const Video = require('../models/video');
-const {to} = require('../../helpers/assyncronous');
-
+const Video = require("../models/video");
+const { to } = require("../../helpers/assyncronous");
+const {
+    loginErrors,
+    registerErrors,
+    unknownErrors,
+    notProvideds
+} = require("../../config/errors.js");
 const population = {
-    path: 'lesson',
+    path: "lesson",
     populate: {
-        path: 'section',
+        path: "section",
         populate: {
-            path: 'subject',
+            path: "subject",
             populate: {
-                path: 'knowledge'
+                path: "knowledge"
             }
         }
     }
@@ -16,8 +21,8 @@ const population = {
 
 module.exports = {
     async index(req, res) {
-        const {page = 1, limit = 20} = req.query;
-        const video = await Video.paginate({}, {page: page, limit: limit});
+        const { page = 1, limit = 20 } = req.query;
+        const video = await Video.paginate({}, { page: page, limit: limit });
         return res.json(video);
     },
     async show(req, res) {
@@ -28,19 +33,27 @@ module.exports = {
         });
     },
     async store(req, res) {
-        const {title, link, lesson} = req.body;
+        const { title, link, lesson } = req.body;
 
-        if (!title || !link || !lesson)
-            return res
-                .status(400)
-                .send({error: 'Nem todos os campos obrigatórios foram fornecidos'});
+        if (!title) return res.status(400).send(notProvideds.titleNotProvided);
+
+        if (!link) return res.status(400).send(notProvideds.linkNotProvided);
+
+        if (!lesson)
+            return res.status(400).send(notProvideds.lessonNotProvided);
 
         const [video, error] = await to(Video.create(req.body));
-        if (error) res.status(400).send({error: 'Erro ao adicionar vídeo ' + error});
+        if (error)
+            res.status(400).send({
+                error: "Erro ao adicionar vídeo " + error,
+                code: unknownErrors.unknownCreateVideoErrorCode
+            });
         return res.status(201).send(video);
     },
     async update(req, res) {
-        const video = await Video.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        const video = await Video.findByIdAndUpdate(req.params.id, req.body, {
+            new: true
+        });
         return res.json(video);
     },
     async destroy(req, res) {
