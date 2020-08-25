@@ -1,11 +1,14 @@
 const Video = require("../models/video");
 const { to } = require("../../helpers/assyncronous");
+const mongoose = require("mongoose");
 const {
     loginErrors,
     registerErrors,
     unknownErrors,
     notProvideds
 } = require("../../config/errors.js");
+const { query } = require("express");
+
 const population = {
     path: "lesson",
     populate: {
@@ -19,10 +22,21 @@ const population = {
     }
 };
 
+function isAnObjectId(string) {
+    if (!string) return false;
+    try {
+        mongoose.Types.ObjectId(string)
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
 module.exports = {
     async index(req, res) {
-        const { page = 1, limit = 20 } = req.query;
-        const video = await Video.paginate({}, { page: page, limit: limit });
+        const { page = 1, limit = 20, lesson } = req.query;
+        const query = isAnObjectId(lesson) ? { lesson } : {};
+        const video = await Video.paginate(query, { page: page, limit: limit });
         return res.json(video);
     },
     async show(req, res) {

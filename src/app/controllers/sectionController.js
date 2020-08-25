@@ -1,16 +1,27 @@
 const Section = require("../models/section");
 const { to } = require("../../helpers/assyncronous");
+const { compose } = require("../../helpers/compositions");
+const { toInitialUpperCase, removeAccents } = require("../../helpers/convertions");
 const {
     notProvideds,
     unknownErrors,
     sectionErrors
 } = require("../../config/errors");
 
+const castSubject = compose(toInitialUpperCase, removeAccents);
+
 module.exports = {
     async index(req, res) {
         const { page = 1, limit = 20 } = req.query;
+        let { subject } = req.query;
+
+        if (subject)
+            subject = castSubject(subject);
+
+        const query = subject ? { subject } : {};
+
         const section = await Section.paginate(
-            {},
+            query,
             { page: page, limit: limit }
         );
         return res.json(section);
