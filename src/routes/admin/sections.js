@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../../app/middlewares/auth");
+const { isAdmin } = require("../../app/middlewares/auth");
 const {
     index,
     show,
     store,
     update,
-    destroy
+    destroy,
 } = require("../../app/controllers/sectionController");
 
-router.use(auth);
+router.use(isAdmin);
 
 router.get("/", index);
 router.get("/:id", show);

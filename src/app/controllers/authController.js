@@ -5,7 +5,7 @@ const {
     loginErrors,
     registerErrors,
     unknownErrors,
-    notProvideds
+    notProvideds,
 } = require("../../config/errors.js");
 const secret = process.env.APP_SECRET;
 
@@ -26,24 +26,25 @@ async function register(req, res) {
     } catch (error) {
         return res.status(500).send({
             error: "Erro ao realizar o cadastro: " + error,
-            code: unknownErrors.unknownRegisterErrorCode
+            code: unknownErrors.unknownRegisterErrorCode,
         });
     }
 }
 
 async function login(req, res) {
     let { email, password } = req.body;
+
     try {
         const user = await User.findOne({ email }).select("+password");
         if (!user) {
             res.status(400).send(loginErrors.nonExistentEmail);
         } else {
-            user.checkPassword(password, function(err, isCorrectPassword) {
+            user.checkPassword(password, function (err, isCorrectPassword) {
                 if (!isCorrectPassword)
                     res.status(400).send(loginErrors.IncorrectPassword);
                 else {
                     const token = jwt.sign({ email }, secret, {
-                        expiresIn: "1d"
+                        expiresIn: "1d",
                     });
                     res.json({ user: user, token: token });
                 }
@@ -52,12 +53,12 @@ async function login(req, res) {
     } catch (err) {
         return res.status(500).send({
             error: "Erro ao realizar o login: " + err,
-            code: unknownErrors.unknownLoginErrorCode
+            code: unknownErrors.unknownLoginErrorCode,
         });
     }
 }
 
 module.exports = {
     register,
-    login
+    login,
 };
