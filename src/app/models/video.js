@@ -18,11 +18,10 @@ const VideoSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  qualitys: [
-    {
-      type: String,
-    },
-  ],
+  youtubeChannel: {
+    type: String,
+    required: true,
+  },
 });
 
 VideoSchema.plugin(mongoosePaginate);
