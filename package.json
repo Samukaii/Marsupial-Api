@@ -21,7 +21,7 @@
         "express": "^4.19.2",
         "fs": "0.0.1-security",
         "jsonwebtoken": "^8.5.1",
-        "mongoose": "^5.9.15",
+        "mongoose": "^5.13.20",
         "mongoose-paginate": "^5.0.3",
         "nodemon": "^2.0.4",
         "path": "^0.12.7",
